@@ -4,7 +4,8 @@ Portable Regex is a simple tool for testing, constructing, debugging, and otherw
   * [1.1.1 The basics](#the-basics)
   * [1.1.2 Other options](#other-options)
   * [1.1.3 Special characters](#special-characters)
-* [1.2 License](#license)
+* [1.2 Credits](#credits)
+* [1.3 License](#license)
 
 ## Features
 
@@ -27,7 +28,6 @@ There are a number of other things you can do with your regex other than just se
 * _Reverse Grep_ (Print lines **not** matching the pattern. Functions like *nix `grep -v`. These results can optionally be piped back to the input window.)
 * _Modify orignal_ (Show changes in input window. Replaces original text with the value of the text after the matching pattern has been replaced with the contents of the _Replacement text_ box.)
 * _Show original_ (Display the original source text.)
-
 
 ### Special characters
 
@@ -61,6 +61,9 @@ Pre-composed expressions matching a variety of special characters can be inserte
 
 If you need to insert a tab character into the replacement text, use the "Insert tab" button.
 
+## Credits
+
+* [milligram](https://github.com/milligram/milligram) CSS by @cjpatoilo, prototyped using [dropin-minimal-css](https://github.com/dohliam/dropin-minimal-css)
 
 ## License
 
