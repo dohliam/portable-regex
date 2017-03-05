@@ -4,8 +4,7 @@ Portable Regex is a simple tool for testing, constructing, debugging, and otherw
   * [1.1.1 The basics](#the-basics)
   * [1.1.2 Other options](#other-options)
   * [1.1.3 Special characters](#special-characters)
-* [1.2 To do](#to-do)
-* [1.3 License](#license)
+* [1.2 License](#license)
 
 ## Features
 
@@ -62,10 +61,6 @@ Pre-composed expressions matching a variety of special characters can be inserte
 
 If you need to insert a tab character into the replacement text, use the "Insert tab" button.
 
-
-## To do
-
-* Add some nice CSS
 
 ## License
 

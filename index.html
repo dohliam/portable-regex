@@ -1,191 +1,82 @@
 <html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<title>Portable Regex</title>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Portable Regex</title>
+    <link rel="stylesheet" type="text/css" href="https://dohliam.github.io/dropin-minimal-css/vendor/milligram.min.css"> 
+    <style type="text/css">
+      #input_text {
+        width: 85%;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="portregex.js" type="text/javascript"></script>
+  </head>
 
-	<style type="text/css">
-	body, html{
-		font-family: sans-serif;
-		background-color:#F2F0F0;
-	}
-	</style>
-	
-	<script type="text/javascript">
+  <body onload="selectText()">
 
-	function ReplaceText() {
-		var MyText = document.getElementById("text_input");
-		var MyRegex = document.getElementById("regex_input");
-		var MyReplaceTxt = document.getElementById("replace_text");
-		var re = new RegExp(MyRegex.value, "g");
-		var Result = document.getElementById("result");
-		Result.innerHTML = MyText.value.replace(re,MyReplaceTxt.value);
-	//	MyText.value = MyText.value.replace(re,MyReplaceTxt.value);
-		return true;
-	}
-	function TestText() {
-		var MyText = document.getElementById("text_input");
-		var MyRegex = document.getElementById("regex_input");
-		var re = new RegExp(MyRegex.value, "g");
-		var Result = document.getElementById("result");
-		Result.innerHTML = re.test(MyText.value);
-	//	MyText.value = re.test(MyText.value);
-		return true;
-	}
-	function ExecText() {
-		var MyText = document.getElementById("text_input");
-		var MyRegex = document.getElementById("regex_input");
-		var re = new RegExp(MyRegex.value, "g");
-		var Result = document.getElementById("result");
-		Result.innerHTML = re.exec(MyText.value);
-	//	MyText.value = re.exec(MyText.value);
-		return true;
-	}
-	function SelectText() {
-		var HighLight = document.getElementById("result");
-		var MyText = document.getElementById("text_input");
-		var MyRegex = document.getElementById("regex_input");
-		var re = new RegExp("(" + MyRegex.value + ")", "g");
-		HighLight.innerHTML = MyText.value.replace(re,'<span style="background-color:FFFF14">$1</span>');
-		return true;
-	}
-	function ShowSource() {
-		var Result = document.getElementById("result");
-		var MyText = document.getElementById("text_input");
-		Result.innerHTML = MyText.value.replace("\n", "<br>");
-		return true;
-	}
-	function ModifySource() {
-		var MyText = document.getElementById("text_input");
-		var MyRegex = document.getElementById("regex_input");
-		var MyReplaceTxt = document.getElementById("replace_text");
-		var re = new RegExp(MyRegex.value, "g");
-		var Result = document.getElementById("result");
-	// 	Result.innerHTML = MyText.value.replace(re,MyReplaceTxt.value);
-		MyText.value = MyText.value.replace(re,MyReplaceTxt.value);
-		return true;
-	}
-	function grep(fmt) {
-		var MyText = document.getElementById("text_input").value;
-		var lines = MyText.split("\n");
-		var Result = document.getElementById("result");
-		var MyRegex = document.getElementById("regex_input").value;
-		var regex = new RegExp(MyRegex);
-		var grepedText = "";
-		var br = (fmt=="html") ? "<p>" : "\n";
-		for (var i = 0; i < lines.length; i++) {
-			var text = lines[i];
-			matches = regex.exec(text);
-			if (matches != null) {
-				grepedText += text + br;
-			}
-		}
-		(fmt=="html") ? Result.innerHTML = grepedText : document.getElementById("text_input").value = grepedText;
-	}
-	function grepv(fmt) {
-		var MyText = document.getElementById("text_input").value;
-		var lines = MyText.split("\n");
-		var Result = document.getElementById("result");
-		var MyRegex = document.getElementById("regex_input").value;
-		var regex = new RegExp(MyRegex);
-		var grepedText = "";
-		var br = (fmt=="html") ? "<p>" : "\n";
-		for (var i = 0; i < lines.length; i++) {
-			var text = lines[i];
-			matches = regex.exec(text);
-			if (matches == null) {
-				grepedText += text + br;
-			}
-		}
-		(fmt=="html") ? Result.innerHTML = grepedText : document.getElementById("text_input").value = grepedText;
-	}
-	function apBtn(text) {
-		var inputBtn = document.getElementById("replace_text");
-		inputBtn.value = inputBtn.value + text;
-		inputBtn.focus();
-		return true;
-	}
-	function ddBtn(text) {
-		var inputBtn = document.getElementById("regex_input");
-		inputBtn.value = inputBtn.value + text;
-		inputBtn.focus();
-		return true;
-	}
-	</script>
+  <h1>Portable Regex</h1>
 
-
-
-</head>
-
-<body onload="SelectText()">
-
-	<h2>Portable Regex</h2>
-	
-	<div id="input_text">
-	<table><tr><td style="white-space: nowrap">
-		<h3>Input:</h3>
-		<textarea id="text_input" cols="70" rows="10">In computing, a regular expression provides a concise and flexible means to "match" (specify and recognize) strings of text, such as particular characters, words, or patterns of characters. Common abbreviations for "regular expression" include regex and regexp.
+  <div id="input_text">
+    <h2>Input</h2>
+    <textarea id="text_input" cols="70" rows="10">In computing, a regular expression provides a concise and flexible means to "match" (specify and recognize) strings of text, such as particular characters, words, or patterns of characters. Common abbreviations for "regular expression" include regex and regexp.
 
 A regular expression is written in a formal language that can be interpreted by a regular expression processor, which is a program that either serves as a parser generator or examines text and identifies parts that match the provided specification.
 
 The concept of regular expressions was first popularized by utilities provided by Unix distributions, in particular the editor ed and the filter grep. Historically, the concept of regular expressions is associated with Kleene's formalism of regular sets, introduced in the 1950s.</textarea>
-			<br/>&nbsp;<br/>
+    <br>
 
-		Regular Expression:&nbsp;<input type="text" size="50" id="regex_input" value="(\w+\sexpr.*?\b)|(\breg.*?\b)" onkeyup="SelectText();" />
-			<select>
-				<option value="null" label="Insert special characters">Insert...</option>
-				<option onclick="ddBtn('\\t')">Tab</option>
-				<option onclick="ddBtn('\\n')">Linebreak</option>
-				<option onclick="ddBtn('\\s')">Whitespace</option>
-				<option onclick="ddBtn('\\S')">Any non-whitespace</option>
-				<option onclick="ddBtn('\\b')">Word boundary</option>
-				<option onclick="ddBtn('\\d')">Any digit [0-9]</option>
-				<option onclick="ddBtn('\\w')">Any letter or digit</option>
-				<option onclick="ddBtn('\\W')">Any non-word character</option>
-				<option onclick="ddBtn('\\w+')">Any word</option>
-				<option onclick="ddBtn('\\D')">Any non-digit</option>
-				<option onclick="ddBtn('?')">Non-greedy match</option>
-				<option onclick="ddBtn('*')">Zero or more of prec. term</option>
-				<option onclick="ddBtn('+')">One or more of prec. term</option>
-				<option onclick="ddBtn('.')">Any character</option>
-				<option onclick="ddBtn('\\')">Escape</option>
-				<option onclick="ddBtn('[一-龜]')">Any Hanzi</option>
-				<option onclick="ddBtn('[あ-ん]')">Any Hiragana</option>
-				<option onclick="ddBtn('[ァ-ヺ]')">Any Katakana</option>
-				<option onclick="ddBtn('[가-힣]')">Any Hangul</option>
-				<option onclick="ddBtn('[Ё-ё]')">Any Cyrillic</option>
-				<option onclick="ddBtn('[a-ȇ]+')">Any Latin (incl. diacritics)</option>
-				<option onclick="ddBtn('[a-z]')">Any lowercase letter</option>
-				<option onclick="ddBtn('[A-Z]')">Any uppercase letter</option>
-				<option onclick="ddBtn('[^aeiou\\W]')">Any consonant</option>
-				<option onclick="ddBtn('[aeiou]')">Any vowel</option>
-			</select><p>
-
-
-		Replacement Text:&nbsp;<input type="text" size="30" id="replace_text" value="regex" onkeyup="ReplaceText();" />
-
-		<input type=button onclick="apBtn('	')" value="Insert tab">
-		<input type=button onclick='var inputBtn = document.getElementById("replace_text"); inputBtn.value = inputBtn.value + "$1"; inputBtn.focus(); return true;' value="Insert backreference"><p>
+    Regular Expression:&nbsp;<input type="text" size="50" id="regex_input" value="(\w+\sexpr.*?\b)|(\breg.*?\b)" onkeyup="selectText();" />
+      <select id="insert_special" onchange="insertRegex(this.value)">
+        <option value="">Insert special characters...</option>
+        <option value="\t">Tab</option>
+        <option value="\n">Linebreak</option>
+        <option value="\s">Whitespace</option>
+        <option value="\S">Any non-whitespace</option>
+        <option value="\b">Word boundary</option>
+        <option value="\d">Any digit [0-9]</option>
+        <option value="\w">Any letter or digit</option>
+        <option value="\W">Any non-word character</option>
+        <option value="\w+">Any word</option>
+        <option value="\D">Any non-digit</option>
+        <option value="?">Non-greedy match</option>
+        <option value="*">Zero or more of prec. term</option>
+        <option value="+">One or more of prec. term</option>
+        <option value=".">Any character</option>
+        <option value="\">Escape</option>
+        <option value="[一-龜]">Any Hanzi</option>
+        <option value="[あ-ん]">Any Hiragana</option>
+        <option value="[ァ-ヺ]">Any Katakana</option>
+        <option value="[가-힣]">Any Hangul</option>
+        <option value="[Ё-ё]">Any Cyrillic</option>
+        <option value="[a-ȇ]+">Any Latin (incl. diacritics)</option>
+        <option value="[a-z]">Any lowercase letter</option>
+        <option value="[A-Z]">Any uppercase letter</option>
+        <option value="[^aeiou\W]">Any consonant</option>
+        <option value="[aeiou]">Any vowel</option>
+      </select><p>
 
 
-			<a href="#" onclick="ReplaceText();" title="Regex Search and Replace">Regex it!</a>
+    Replacement Text:&nbsp;<input type="text" size="30" id="replace_text" value="regex" onkeyup="replaceText();" />
 
-<h3>Other Options</h3>
-			<a href="#" onclick="TestText();" title="Regex Search and Replace">Test</a> (Search for specified value and return true or false depending on the result)<br>
-			<a href="#" onclick="ExecText();" title="Regex Search and Replace">Exec</a> (Search for specified value, and return text of the found results)<br>
-			<a href="#" onclick="SelectText();" title="Regex Search and Replace">Select</a> (Highlight matching text)<br>
-			<a href="#" onclick="grep('html');" title="Regex Search and Replace">Grep</a> (Print lines matching the pattern)
-			<input type=button onclick="grep();" value="Pipe to input window"><br>
-			<a href="#" onclick="grepv('html');" title="Regex Search and Replace">Reverse Grep</a> (Print lines not matching the pattern)
-			<input type=button onclick="grepv();" value="Pipe to input window"><br>
-			<a href="#" onclick="ModifySource();" title="Regex Search and Replace">Modify original</a> (Show changes in input window)<br>
-			<a href="#" onclick="ShowSource();" title="Regex Search and Replace">Show original</a> (Display source text)<p>
-</td>
+    <input type=button onclick="insertReplace('\t')" value="Insert tab">
+    <input type=button onclick="insertReplace('$1')" value="Insert backreference"><p>
 
-<td style="vertical-align:text-top;">
-<h3>Result:</h3>
+
+      <button type="button" onclick="replaceText();">Regex it!</button>
+
+<h2>Result</h2>
 <div id="result">&nbsp;</div>
 
-	</div>
-	</td></tr></table>
-</body>
+<h2>Other Options</h2>
+  <button type="button" onclick="testText();">Test</button> Search for specified value and return true or false depending on the result<br>
+  <button type="button" onclick="execText();">Exec</button> Search for specified value, and return text of the found results<br>
+  <button type="button" onclick="selectText();">Select</button> Highlight matching text<br>
+  <button type="button" onclick="grep('html');">Grep</button> Print lines matching the pattern
+  <input type=button onclick="grep();" value="Pipe to input window"><br>
+  <button type="button" onclick="vgrep('html');">Reverse Grep</button> Print lines not matching the pattern
+  <input type=button onclick="vgrep();" value="Pipe to input window"><br>
+  <button type="button" onclick="modifySource();">Modify original</button> Show changes in input window<br>
+  <button type="button" onclick="showSource();">Show original</button> Display source text<p>
+
+  </body>
 </html>
